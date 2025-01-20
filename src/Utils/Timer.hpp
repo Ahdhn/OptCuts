@@ -128,8 +128,10 @@ public:
     
     double timing_total(void) {
         double total = 0.0;
-        for(int i = 0; i < timings_.size(); i++) {
-            total += timings_[i];
+        for(int i = 0; i < timings_.size(); i++) {            
+            if(timings_[i]>0){
+                total += timings_[i];
+            }
         }
         return total;
     }

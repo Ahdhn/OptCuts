@@ -57,10 +57,10 @@ namespace OptCuts {
         propagateFracture = p_propagateFracture;
         mute = p_mute;
         
-        if(!mute) {
-            file_energyValPerIter.open(outputFolderPath + "energyValPerIter.txt");
-            file_gradientPerIter.open(outputFolderPath + "gradientPerIter.txt");
-        }
+        //if(!mute) {
+        //    file_energyValPerIter.open(outputFolderPath + "energyValPerIter.txt");
+        //    file_gradientPerIter.open(outputFolderPath + "gradientPerIter.txt");
+        //}
         
         if(!data0.checkInversion()) {
             exit(-1);
@@ -194,10 +194,10 @@ namespace OptCuts {
         data_findExtrema = data0;
         updateTargetGRes();
         computeEnergyVal(result, scaffold, lastEnergyVal);
-        if(!mute) {
-            writeEnergyValToFile(true);
-            std::cout << "E_initial = " << lastEnergyVal << std::endl;
-        }
+        //if(!mute) {
+        //    writeEnergyValToFile(true);
+        //    std::cout << "E_initial = " << lastEnergyVal << std::endl;
+        //}
     }
     
     int Optimizer::solve(int maxIter)
@@ -210,7 +210,7 @@ namespace OptCuts {
             const double sqn_g = gradient.squaredNorm();
             if(!mute) {
                 std::cout << "||gradient||^2 = " << sqn_g << ", targetGRes = " << targetGRes << std::endl;
-                writeGradL2NormToFile(false);
+                //writeGradL2NormToFile(false);
             }
             if(sqn_g < targetGRes) {
                 // converged
@@ -337,7 +337,7 @@ namespace OptCuts {
             // compute gradient and output
             computeGradient(result, scaffold, gradient);
             if(gradient.squaredNorm() < targetGRes) {
-                logFile << "||g||^2 = " << gradient.squaredNorm() << " after fracture initiation!" << std::endl;
+                //logFile << "||g||^2 = " << gradient.squaredNorm() << " after fracture initiation!" << std::endl;
             }
         }
         
@@ -383,7 +383,7 @@ namespace OptCuts {
             case 0: // boundary split
                 std::cout << "boundary split without querying again" << std::endl;
                 result.splitEdgeOnBoundary(std::pair<int, int>(path[0], path[1]), newVertPos);
-                logFile << "boundary edge splitted without querying again" << std::endl;
+                //logFile << "boundary edge splitted without querying again" << std::endl;
                 //TODO: process fractail here!
                 result.updateFeatures();
                 break;
@@ -391,7 +391,7 @@ namespace OptCuts {
             case 1: // interior split
                 std::cout << "Interior split without querying again" << std::endl;
                 result.cutPath(path, true, 1, newVertPos);
-                logFile << "interior edge splitted without querying again" << std::endl;
+                //logFile << "interior edge splitted without querying again" << std::endl;
                 result.fracTail.insert(path[0]);
                 result.fracTail.insert(path[2]);
                 result.curInteriorFracTails.first = path[0];
@@ -403,7 +403,7 @@ namespace OptCuts {
                 std::cout << "corner edge merged without querying again" << std::endl;
                 result.mergeBoundaryEdges(std::pair<int, int>(path[0], path[1]),
                                           std::pair<int, int>(path[1], path[2]), newVertPos.row(0));
-                logFile << "corner edge merged without querying again" << std::endl;
+                //logFile << "corner edge merged without querying again" << std::endl;
                 
                 result.computeFeatures(); //TODO: only update locally
                 isMerge = true;
@@ -426,9 +426,9 @@ namespace OptCuts {
         updateEnergyData(true, false, true);
         timer.stop();
         fractureInitiated = true;
-        if(!mute) {
-            writeEnergyValToFile(false);
-        }
+        //if(!mute) {
+        //    writeEnergyValToFile(false);
+        //}
         
         if(allowPropagate) {
             propagateFracture = 1 + isMerge;
@@ -491,9 +491,9 @@ namespace OptCuts {
             updateEnergyData(true, false, true);
             timer.stop();
             fractureInitiated = true;
-            if((!mute) && (propType == 0)) {
-                writeEnergyValToFile(false);
-            }
+            //if((!mute) && (propType == 0)) {
+            //    writeEnergyValToFile(false);
+            //}
             
             if(allowPropagate && (propType == 0)) {
                 propagateFracture = 1 + isMerge;
@@ -599,9 +599,9 @@ namespace OptCuts {
             stepSize /= 2.0;
             if(stepSize == 0.0) {
                 stopped = true;
-                if(!mute) {
-                    logFile << "testingE" << globalIterNum << " " << testingE << " > " << lastEnergyVal << std::endl;
-                }
+                //if(!mute) {
+                //    logFile << "testingE" << globalIterNum << " " << testingE << " > " << lastEnergyVal << std::endl;
+                //}
                 break;
             }
             
@@ -643,9 +643,9 @@ namespace OptCuts {
             std::cout << "stepLen = " << (stepSize * searchDir).squaredNorm() << std::endl;
             std::cout << "E_cur_smooth = " << testingE - energyVal_scaffold << std::endl;
 
-            if(!stopped) {
-                writeEnergyValToFile(false);
-            }
+            //if(!stopped) {
+            //    writeEnergyValToFile(false);
+            //}
         }
         
         return stopped;

@@ -354,11 +354,11 @@ void saveInfoForPresent(const std::string fileName = "info.txt")
     
     file << iterNum << " " << optimizer->getTopoIter() << " 0 0 " << lambda_init << " " << 1.0 - energyParams[0] << std::endl;
     
-    file << "0.0 0.0 " << timer.timing_total() << " " << secPast <<
-        " topo" << timer.timing(0) << " desc" << timer.timing(1) << " scaf" << timer.timing(2) << " enUp" << timer.timing(3) <<
-        " mtrComp" << timer_step.timing(0) << " mtrAssem" << timer_step.timing(1) << " symFac" << timer_step.timing(2) <<
-        " numFac" << timer_step.timing(3) << " backSolve" << timer_step.timing(4) << " lineSearch" << timer_step.timing(5) <<
-        " bSplit" << timer_step.timing(6) << " iSplit" << timer_step.timing(7) << " cMerge" << timer_step.timing(8) << std::endl;
+    file << "total_time= " << timer.timing_total() << "\nsecPast= " << secPast << "\n" <<
+        "\ntopo= " << timer.timing(0) << "\ndesc= " << timer.timing(1) << "\nscaf= " << timer.timing(2) << "\nenUp= " << timer.timing(3) <<
+        "\nmtrComp= " << timer_step.timing(0) << "\nmtrAssem= " << timer_step.timing(1) << "\nsymFac= " << timer_step.timing(2) <<
+        "\nnumFac= " << timer_step.timing(3) << "\nbackSolve= " << timer_step.timing(4) << "\nlineSearch= " << timer_step.timing(5) <<
+        "\nbSplit= " << timer_step.timing(6) << "\niSplit= " << timer_step.timing(7) << "\ncMerge= " << timer_step.timing(8) << std::endl;
     
     double seamLen;
     if(energyParams[0] == 1.0) {
